@@ -36,6 +36,7 @@ public class CommandExecutor {
         } else if (commandName.equals(EnumCommand.MKDIR.getName())) {
 
             boolean childAdded;
+
             if (parameter.startsWith("/")) {
                 childAdded = dTree.addChild(parameter);
             } else {
@@ -65,6 +66,10 @@ public class CommandExecutor {
         }
         return result;
     }
+
+
+
+    //########################### getters and setters #############################
 
     public DirectoryTree getDTree() {
         return dTree;

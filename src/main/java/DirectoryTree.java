@@ -2,11 +2,21 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
+/**
+ * This class contains the methods to add, remove, traverse a directory structure
+ */
 public class DirectoryTree {
 
     public static final String ROOT = "/";
+    public static final String DIR_PATTERN = "([a-zA-z0-9_.]+)";
     private DirectoryNode root;
+
+    /**
+     * This is the current node at which the application is
+     */
     private DirectoryNode currentNode;
 
     public DirectoryTree() {
@@ -24,20 +34,23 @@ public class DirectoryTree {
     public boolean addChild(String path) {
 
         // find the directory to which a directory has to be added
-        String pathLastButOneDir = path.substring(0, path.lastIndexOf(ROOT) - 1);
-        String name = path.substring(path.lastIndexOf(ROOT) + 1, path.length() - 1);
+        String pathLastButOneDir = path.substring(0, path.lastIndexOf(ROOT) + 1);
+        String name = path.substring(path.lastIndexOf(ROOT) + 1, path.length());
+
         DirectoryNode node = find(pathLastButOneDir);
         if (node != null) {
             DirectoryNode newNode = new DirectoryNode(name);
             Set<DirectoryNode> children = node.getChildren();
             if (children == null) {
                 children = new HashSet<DirectoryNode>();
+                node.setChildren(children);
             } else {
                 for (DirectoryNode child : children) {
                     if (child.getName().equals(name))
                         return false;
                 }
             }
+            newNode.setParent(node);
             children.add(newNode);
             return true;
         }
@@ -54,8 +67,8 @@ public class DirectoryTree {
         String name;
         DirectoryNode node;
         if (path.contains(ROOT)) {
-            String pathLastButOneDir = path.substring(0, path.lastIndexOf(ROOT) - 1);
-            name = path.substring(path.lastIndexOf(ROOT) + 1, path.length() - 1);
+            String pathLastButOneDir = path.substring(0, path.lastIndexOf(ROOT) + 1);
+            name = path.substring(path.lastIndexOf(ROOT) + 1, path.length());
             node = findRelative(currentNode, pathLastButOneDir);
             if (node == null) {
                 return false;
@@ -75,6 +88,7 @@ public class DirectoryTree {
                         return false;
                 }
             }
+            newNode.setParent(node);
             children.add(newNode);
         }
         return true;
@@ -122,14 +136,19 @@ public class DirectoryTree {
             return root;
 
         DirectoryNode node = root;
-        String[] dirs = path.split("/");
+
+        Pattern reg = Pattern.compile(DIR_PATTERN);
+        List<String> dirs = new ArrayList<String>();
+        Matcher m = reg.matcher(path);
+        while (m.find()) dirs.add(m.group());
+
         int i = 0;
-        while (i < dirs.length) {
+        while (i < dirs.size()) {
             Set<DirectoryNode> children = node.getChildren();
             boolean found = false;
-            if (children != null) {
+            if (children != null && children.size() > 0) {
                 for (DirectoryNode child : children) {
-                    if (child.getName().equals(dirs[i])) {
+                    if (child.getName().equals(dirs.get(i))) {
                         found = true;
                         node = child;
                         break;
@@ -156,14 +175,19 @@ public class DirectoryTree {
      */
     private DirectoryNode findRelative(DirectoryNode node, String path) {
         DirectoryNode currentNode = node;
-        String[] dirs = path.split("/");
+
+        Pattern reg = Pattern.compile(DIR_PATTERN);
+        List<String> dirs = new ArrayList<String>();
+        Matcher m = reg.matcher(path);
+        while (m.find()) dirs.add(m.group());
+
         int i = 0;
-        while (i < dirs.length) {
+        while (i < dirs.size()) {
             Set<DirectoryNode> children = currentNode.getChildren();
             boolean found = false;
             if (children != null) {
                 for (DirectoryNode child : children) {
-                    if (child.getName().equals(dirs[i].trim())) {
+                    if (child.getName().equals(dirs.get(i).trim())) {
                         found = true;
                         node = child;
                         break;
@@ -211,10 +235,14 @@ public class DirectoryTree {
     public boolean deleteDirectory(String path) {
 
         DirectoryNode node = find(path);
-        if (node != null) {
+        if (node != null && node != root) {
+            node.getParent().getChildren().remove(node);
             node.setChildren(null);
+            node = null;
+            currentNode = root;
             return true;
-        } else return false;
+        }
+        return false;
     }
 
     /**
@@ -232,6 +260,9 @@ public class DirectoryTree {
         } else return false;
     }
 
+
+    //########################### getters and setters #############################
+
     public DirectoryNode getCurrentNode() {
         return currentNode;
     }
@@ -242,6 +273,7 @@ public class DirectoryTree {
 
     public boolean clear() {
         root.setChildren(null);
+        currentNode = root;
         return true;
     }
 }

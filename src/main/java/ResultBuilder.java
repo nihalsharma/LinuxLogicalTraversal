@@ -12,8 +12,9 @@ public class ResultBuilder {
      * @return well formed output string
      */
     public static String getResultString(String commandName, boolean result) {
-        EnumCommand command = EnumCommand.valueOf(commandName);
+        EnumCommand command = EnumCommand.getEnumByValue(commandName);
         StringBuilder sb = new StringBuilder();
+
         switch (command) {
             case CD:
                 sb = result ? sb.append("SUCC : REACHED") : sb.append("ERR : INVALID PATH");
