@@ -1,0 +1,30 @@
+pwd
+pwd dssdd
+PWD
+cd /abc
+mkdir /abc
+cd /abc
+pwd
+cd /
+pwd
+rm /abc
+cd /abc
+mkdir /abc/def
+mkdir /abc
+mkdir /abc/def
+mkdir /abc/ijk
+cd /abc
+pwd
+cd /abc/def
+pwd
+cd /abc/ijk
+rm /abc/def
+pwd
+cd /abc/def
+rm /abc
+cd /abc
+pwd
+mkdir /abc
+session clear
+pwd
+cscd cscdsdc

@@ -17,6 +17,7 @@ public class CommandExecutor {
      * @return the desired output
      */
     public String runCommand(String commandName, String parameter) {
+
         String result;
         if (commandName.equals(EnumCommand.PWD.getName())) {
 
@@ -64,6 +65,7 @@ public class CommandExecutor {
             result = ResultBuilder.getResultString(null, true);
 
         }
+
         return result;
     }
 

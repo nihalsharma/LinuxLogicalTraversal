@@ -2,6 +2,7 @@ import org.apache.commons.cli.BasicParser;
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.HelpFormatter;
+import org.apache.commons.cli.Option;
 import org.apache.commons.cli.Options;
 import org.apache.commons.cli.ParseException;
 
@@ -11,27 +12,30 @@ import java.util.logging.Logger;
 /**
  * Class to parse Command Line Options
  */
-public class CliParser {
+public class CommandLineArgumentParser {
 
-    private static final Logger log = Logger.getLogger(CliParser.class.getName());
+    private static final Logger log = Logger.getLogger(CommandLineArgumentParser.class.getName());
     private String[] args = null;
     private Options options = new Options();
     private String filename = null;
 
 
-    public CliParser(String[] args) {
+    public CommandLineArgumentParser(String[] args) {
         this.args = args;
         options.addOption("h", "help", false, "show help.");
-        options.addOption("f", "file", false, "Provide the file name for this option.");
+        Option optionalArgument = new Option("f", "Provide the file name for this option.");
+        optionalArgument.setOptionalArg(true);
+        optionalArgument.setArgs(1);
+        options.addOption(optionalArgument);
     }
 
     /**
-     * Parse the command line options
+     * Parse the command line options, if any
      */
     public void parse() {
         CommandLineParser parser = new BasicParser();
-
         CommandLine cmd = null;
+
         try {
             cmd = parser.parse(options, args);
 
@@ -39,10 +43,12 @@ public class CliParser {
                 help();
 
             if (cmd.hasOption("f")) {
-                this.filename = cmd.getOptionValue("f");
-            } else {
-                log.log(Level.SEVERE, "Missing file name");
-                help();
+                if (!(cmd.getOptionValue("f") == null || cmd.getOptionValue("f").length() == 0))
+                    this.filename = cmd.getOptionValue("f");
+                else {
+                    log.log(Level.SEVERE, "Please give a valid file name");
+                    help();
+                }
             }
 
         } catch (ParseException e) {

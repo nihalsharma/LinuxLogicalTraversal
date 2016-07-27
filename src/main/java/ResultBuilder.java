@@ -12,6 +12,7 @@ public class ResultBuilder {
      * @return well formed output string
      */
     public static String getResultString(String commandName, boolean result) {
+
         EnumCommand command = EnumCommand.getEnumByValue(commandName);
         StringBuilder sb = new StringBuilder();
 
@@ -33,6 +34,7 @@ public class ResultBuilder {
                 break;
 
         }
+
         return String.valueOf(sb);
     }
 }
