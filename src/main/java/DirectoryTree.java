@@ -38,7 +38,7 @@ public class DirectoryTree {
         String name = path.substring(path.lastIndexOf(ROOT) + 1, path.length());
 
         DirectoryNode node = find(pathLastButOneDir);
-        if (node != null) {
+        if (node != null && !(name == null || name.length() == 0)) {
             DirectoryNode newNode = new DirectoryNode(name);
             Set<DirectoryNode> children = node.getChildren();
             if (children == null) {
