@@ -21,5 +21,5 @@ There would be an additional command, for application purpose, which is
 
 ### How do I run the jar? ###
 
-* java -jar target/Playment-1.0-SNAPSHOT-jar-with-dependencies.jar
-* java -jar target/Playment-1.0-SNAPSHOT-jar-with-dependencies.jar -f filename_with_total_path
+* java -jar target/JARNAME-1.0-SNAPSHOT-jar-with-dependencies.jar
+* java -jar target/JARNAME-1.0-SNAPSHOT-jar-with-dependencies.jar -f filename_with_total_path

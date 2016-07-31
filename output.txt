@@ -1,0 +1,89 @@
+pwd
+PATH: /
+
+pwd dssdd
+ERR: CANNOT RECOGNIZE INPUT
+
+PWD
+ERR: CANNOT RECOGNIZE INPUT
+
+cd /abc
+ERR : INVALID PATH
+
+mkdir /abc
+SUCC : CREATED
+
+cd /abc
+SUCC : REACHED
+
+pwd
+PATH: /abc
+
+cd /
+SUCC : REACHED
+
+pwd
+PATH: /
+
+rm /abc
+SUCC : DELETED
+
+cd /abc
+ERR : INVALID PATH
+
+mkdir /abc/def
+ERR : CANNOT CREATE
+
+mkdir /abc
+SUCC : CREATED
+
+mkdir /abc/def
+SUCC : CREATED
+
+mkdir /abc/ijk
+SUCC : CREATED
+
+cd /abc
+SUCC : REACHED
+
+pwd
+PATH: /abc
+
+cd /abc/def
+SUCC : REACHED
+
+pwd
+PATH: /abc/def
+
+cd /abc/ijk
+SUCC : REACHED
+
+rm /abc/def
+SUCC : DELETED
+
+pwd
+PATH: /
+
+cd /abc/def
+ERR : INVALID PATH
+
+rm /abc
+SUCC : DELETED
+
+cd /abc
+ERR : INVALID PATH
+
+pwd
+PATH: /
+
+mkdir /abc
+SUCC : CREATED
+
+session clear
+SUCC: CLEARED: RESET TO ROOT
+
+pwd
+PATH: /
+
+cscd cscdsdc
+ERR: CANNOT RECOGNIZE INPUT
