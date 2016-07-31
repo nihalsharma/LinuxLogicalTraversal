@@ -12,6 +12,8 @@ There would be an additional command, for application purpose, which is
 
 * session clear
 
+* Please check the sample input and output text files
+
 
 ### How do I get set up? ###
 
@@ -23,3 +25,4 @@ There would be an additional command, for application purpose, which is
 
 * java -jar target/JARNAME-1.0-SNAPSHOT-jar-with-dependencies.jar
 * java -jar target/JARNAME-1.0-SNAPSHOT-jar-with-dependencies.jar -f filename_with_total_path
+
